@@ -12,7 +12,7 @@ import json, html, sys, datetime, pathlib, os
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ref = json.load(open(os.environ.get('REF_PATH') or ROOT / 'data/ref.private.json'))
 goals = [r for r in ref if r['kind'] == 'goal']
-DEALS_URL = 'https://claude.ai/artifact/9PKJnRUuRpsGqwdWMMP5ef'
+DEALS_URL = 'deals.html'
 ups_dids = sorted({r['did'] for r in ref if r['kind'] == 'upsell'})
 
 def make_sql():
