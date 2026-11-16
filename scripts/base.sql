@@ -1,10 +1,10 @@
 WITH d AS (
-  SELECT CAST(id AS varchar) AS did, deal_name AS dn, stage AS st, CAST(date(close_date) AS varchar) AS cd,
+  SELECT CAST(id AS varchar) AS did, deal_name AS dn, stage AS st, CAST(date(closed_at) AS varchar) AS cd,
          upper(COALESCE(market,'')) AS mk, pipeline_name AS pipe,
          COALESCE(amount_euros,0) AS amt, all_collaborator_names AS names,
          lower(array_join(all_collaborator_names,';')) AS col
   FROM data_lake_gold.sales_fact_sales_deals
-  WHERE close_date >= DATE '2026-10-01' AND close_date < DATE '2027-01-01'
+  WHERE date(closed_at) >= DATE '2026-10-01' AND date(closed_at) < DATE '2027-01-01'
     AND lower(stage) LIKE 'closed won%'
     AND COALESCE(is_deleted,false)=false
     AND upper(COALESCE(market,'')) IN ('ES','IT','FR','PT','DE','ROW')
