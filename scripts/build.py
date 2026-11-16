@@ -12,6 +12,7 @@ import json, html, sys, datetime, pathlib, os
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ref = json.load(open(os.environ.get('REF_PATH') or ROOT / 'data/ref.private.json'))
 goals = [r for r in ref if r['kind'] == 'goal']
+DEALS_URL = 'https://claude.ai/artifact/9PKJnRUuRpsGqwdWMMP5ef'
 ups_dids = sorted({r['did'] for r in ref if r['kind'] == 'upsell'})
 
 def make_sql():
@@ -71,7 +72,8 @@ def build_html(rows):
 <style>
 {css}</style></head><body><main>
 <header><h1>Pre-sales quota tracker, Q4 2026</h1>
-<p>{ok} of {len(d)} people with a goal are at or above the 70% threshold. The team has credited {eur(tot)} of {eur(gt)} ({pc(tot/gt)}), counting deals closed up to {asof}.</p></header>
+<p>{ok} of {len(d)} people with a goal are at or above the 70% threshold. The team has credited {eur(tot)} of {eur(gt)} ({pc(tot/gt)}), counting deals closed up to {asof}.</p>
+<p class="mut">Last updated: {asof} &middot; <a href="{DEALS_URL}">Deal list by consultant</a></p></header>
 <aside class="note" role="note"><b>*</b> <b>Interim tracker.</b> The Q4 goals are approved. We are completing the data adjustments needed to make the tracking fully accurate, and the attribution will be validated with our PBI team before it becomes official. The official tracker will be available in Power BI by Friday 13.11.26. Until then, this page provides interim visibility, and figures may still change as the validation is completed.</aside>
 <section><h2>Attainment against the approved goal</h2>
 <p class="mut">Credited euros in each person's own domain, any country, divided by the approved Q4 goal. Snapshot of {asof}; updated by a scheduled job.</p>
